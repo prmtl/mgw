@@ -2,6 +2,7 @@ argparse
 bottle
 bottle-sqlite
 netaddr
+peewee
 pyserial
 requests
 urllib3

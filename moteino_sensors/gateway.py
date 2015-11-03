@@ -15,6 +15,7 @@ import requests
 import smtplib
 
 from moteino_sensors import utils
+from moteino_sensors import models
 
 
 class ActionDetailsAdapter(dict):
@@ -474,6 +475,8 @@ def main():
   args = parser.parse_args()
 
   conf = utils.load_config(args.dir + '/global.config.json')
+
+  models.configure(conf)
 
   if args.create_db or args.sync_db_desc:
     create_db(conf['db_file'], args.dir, args.create_db)
