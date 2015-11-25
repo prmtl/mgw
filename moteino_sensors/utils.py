@@ -32,14 +32,15 @@ class ActionValidator(Validator):
     if isaction:
       self._validate_action(field, value)
 
+from moteino_sensors import validators
+
 
 def validate_sensor_data(data):
-  schema = {'board_id': {'required': True, 'empty': False,
-                'type': 'string', 'regex': '^[a-zA-Z0-9]+$'},
-            'sensor_type': {'required': True, 'empty': False, 'type': 'string'},
-            'sensor_data': {'required': True, 'empty': False, 'type': 'string'}}
-  v = Validator()
-  return v.validate(data, schema)
+  try:
+    validators.SensorDataSchema().deserialize(data)
+    return True
+  except validators.Invalid:
+    return False
 
 
 def validate_action_details(data):
