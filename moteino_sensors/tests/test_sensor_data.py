@@ -1,16 +1,17 @@
-import copy
-import os
-import sys
-
 import pytest
 
 from moteino_sensors import utils
 
-default_metric = {
-  'board_id': '10',
-  'sensor_type': 'voltage',
-  'sensor_data': '123'
-}
+
+@pytest.fixture(scope='function')
+def metric():
+  """Provides a default metric data"""
+  return {
+    'board_id': '10',
+    'sensor_type': 'voltage',
+    'sensor_data': '123'
+  }
+
 
 not_empty_string_test_data = (
   (
@@ -55,27 +56,27 @@ not_empty_string_test_data = (
   ),
 )
 
+
 @pytest.mark.parametrize('board_id, expected', not_empty_string_test_data)
-def test_board_id(board_id, expected):
-  metric = copy.deepcopy(default_metric)
+def test_board_id(metric, board_id, expected):
   metric['board_id'] = board_id
 
   ada = utils.validate_sensor_data(metric)
 
   assert ada == expected
 
+
 @pytest.mark.parametrize('sensor_type, expected', not_empty_string_test_data)
-def test_sensor_type(sensor_type, expected):
-  metric = copy.deepcopy(default_metric)
+def test_sensor_type(metric, sensor_type, expected):
   metric['sensor_type'] = sensor_type
 
   ada = utils.validate_sensor_data(metric)
 
   assert ada == expected
 
+
 @pytest.mark.parametrize('sensor_data, expected', not_empty_string_test_data)
-def test_sensor_data(sensor_data, expected):
-  metric = copy.deepcopy(default_metric)
+def test_sensor_data(metric, sensor_data, expected):
   metric['sensor_data'] = sensor_data
 
   ada = utils.validate_sensor_data(metric)
